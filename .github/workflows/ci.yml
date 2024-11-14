@@ -1,8 +1,13 @@
 name: Exemplo de CI
 
 on:
-  push:
-    branches: [ master ]
+  pull_request:
+    branches:
+      - master
+      - develop
+    types: [ opened, reopened ]
+#  push:
+#    branches: [ master ]
 
 jobs:
   build:
