@@ -1,0 +1,22 @@
+name: "Exemplo de CD"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Pull Docker image
+        run: docker pull ${{ secrets.DOCKERHUB_USER }}/exemplo-ci-cd:latest
+
+      - name: Stop Docker container
+        run: docker stop exemplo-ci-cd || true
+
+      - name: Remove Docker container
+        run: docker rm exemplo-ci-cd || true
+
+      - name: Run Docker container
+        run: docker run -d -p 8080:8080 --name exemplo-ci-cd ${{ secrets.DOCKERHUB_USER }}/exemplo-ci-cd:latest
